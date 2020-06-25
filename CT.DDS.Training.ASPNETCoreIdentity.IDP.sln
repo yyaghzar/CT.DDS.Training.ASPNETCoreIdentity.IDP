@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CT.DDS.Training.ASPNETCoreIdentity.IDP", "CT.DDS.Training.ASPNETCoreIdentity.IDP\CT.DDS.Training.ASPNETCoreIdentity.IDP.csproj", "{8C5CE87F-5B54-46F0-8AF9-D3BDD2F6E6A7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C5CE87F-5B54-46F0-8AF9-D3BDD2F6E6A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C5CE87F-5B54-46F0-8AF9-D3BDD2F6E6A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C5CE87F-5B54-46F0-8AF9-D3BDD2F6E6A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C5CE87F-5B54-46F0-8AF9-D3BDD2F6E6A7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {039402AE-86A9-4413-95E9-F13BA6788466}
+	EndGlobalSection
+EndGlobal
