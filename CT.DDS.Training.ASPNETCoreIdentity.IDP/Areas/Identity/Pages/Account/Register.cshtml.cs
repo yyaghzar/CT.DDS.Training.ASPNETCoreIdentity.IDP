@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -60,6 +61,10 @@ namespace CT.DDS.Training.ASPNETCoreIdentity.IDP.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "Title")]
+            public string Title { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -76,6 +81,7 @@ namespace CT.DDS.Training.ASPNETCoreIdentity.IDP.Areas.Identity.Pages.Account
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                await _userManager.AddClaimAsync(user, new Claim("role", Input.Title));
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
