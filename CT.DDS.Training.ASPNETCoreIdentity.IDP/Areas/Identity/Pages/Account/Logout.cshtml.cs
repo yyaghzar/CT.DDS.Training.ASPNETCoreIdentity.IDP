@@ -35,9 +35,11 @@ namespace CT.DDS.Training.ASPNETCoreIdentity.IDP.Areas.Identity.Pages.Account
             _interaction = interaction;
             _events = events;
         }
-        
+
+        public LoggedOutViewModel LoggedOutViewModel { get; set; }
         public async void OnGet(string logoutId)
         {
+            // build a model so the logout page knows what to display
             var vm = await BuildLogoutViewModelAsync(logoutId);
 
             if (vm.ShowLogoutPrompt == false)
@@ -64,7 +66,7 @@ namespace CT.DDS.Training.ASPNETCoreIdentity.IDP.Areas.Identity.Pages.Account
         public async Task<IActionResult> Logout(LogoutInputModel model)
         {
             // build a model so the logged out page knows what to display
-            var vm = await BuildLoggedOutViewModelAsync(model.LogoutId);
+            LoggedOutViewModel = await BuildLoggedOutViewModelAsync(model.LogoutId);
 
             if (User?.Identity.IsAuthenticated == true)
             {
@@ -73,17 +75,18 @@ namespace CT.DDS.Training.ASPNETCoreIdentity.IDP.Areas.Identity.Pages.Account
 
                 // raise the logout event
                 await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
-                if (vm.PostLogoutRedirectUri != null)
-                {
-                    return LocalRedirect(vm.PostLogoutRedirectUri);
-                }
-                else
-                {
-                    return RedirectToPage();
-                }
+
+                //if (vm.PostLogoutRedirectUri != null)
+                //{
+                //    return LocalRedirect(vm.PostLogoutRedirectUri);
+                //}
+                //else
+                //{
+                //    return RedirectToPage();
+                //}
             }
 
-            return RedirectToPage();
+            return Page();
 
 
         }
