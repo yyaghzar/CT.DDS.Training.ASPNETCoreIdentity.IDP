@@ -16,7 +16,9 @@ namespace CT.DDS.Training.ASPNETCoreIdentity.IDP
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
                 new IdentityResources.Email(),
-                new IdentityResource("role",new List<string>{ "role"})
+                new IdentityResource("role",new List<string>{ "role"}),
+                new IdentityResource("job",new List<string>{ "job"}),
+                new IdentityResource("Title",new List<string>{ "Title"})
             };
 
         public static IEnumerable<ApiResource> Apis =>
@@ -51,7 +53,7 @@ namespace CT.DDS.Training.ASPNETCoreIdentity.IDP
                     RedirectUris = { "https://localhost:44346/authentication/login-callback"},
                     PostLogoutRedirectUris = { "https://localhost:44346/authentication/logout-callback" },
                     AllowedScopes = {IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.Email, "role","employeeapi.read"}
+                        IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.Email, "role","employeeapi.read","job","Title"}
                 }
             };
 

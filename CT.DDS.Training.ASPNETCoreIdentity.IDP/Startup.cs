@@ -12,6 +12,9 @@ using CT.DDS.Training.ASPNETCoreIdentity.IDP.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using CT.DDS.Training.ASPNETCoreIdentity.IDP.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace CT.DDS.Training.ASPNETCoreIdentity.IDP
 {
@@ -27,11 +30,20 @@ namespace CT.DDS.Training.ASPNETCoreIdentity.IDP
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                // this brings default user and role stores
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddClaimsPrincipalFactory<MyUserClaimsPrincipalFactory>();
+            // register the email sender
+            services.AddTransient<IEmailSender, EmailSender>();
+            //Register configuration
+            services.Configure<AuthMessageSenderOptions>(Configuration.GetSection("sendGrid"));
+
             services.AddRazorPages();
 
             var builder = services.AddIdentityServer()
@@ -39,7 +51,7 @@ namespace CT.DDS.Training.ASPNETCoreIdentity.IDP
                 .AddInMemoryApiResources(Config.Apis)
                 .AddInMemoryClients(Config.Clients)
                 .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddAspNetIdentity<IdentityUser>();
+                .AddAspNetIdentity<AppUser>();
 
             builder.AddDeveloperSigningCredential();
         }

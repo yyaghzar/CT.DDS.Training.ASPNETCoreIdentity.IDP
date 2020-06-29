@@ -19,13 +19,13 @@ namespace CT.DDS.Training.ASPNETCoreIdentity.IDP.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LogoutModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IEventService _events;
 
         public LogoutModel(
-            SignInManager<IdentityUser> signInManager,
+            SignInManager<AppUser> signInManager,
             ILogger<LogoutModel> logger,
              IIdentityServerInteractionService interaction,
               IEventService events)
