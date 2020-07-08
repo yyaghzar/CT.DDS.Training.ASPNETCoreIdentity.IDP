@@ -44,6 +44,24 @@ namespace CT.DDS.Training.ASPNETCoreIdentity.IDP
             {
 
                 new Client{
+                    // Default 5 mins
+                    IdentityTokenLifetime = 300,
+                    // Default 1 hour
+                    AccessTokenLifetime = 300,
+                    // Default 5 mins
+                    AuthorizationCodeLifetime = 300,
+                    // AllowOfflineAccess scope will be supported 
+                    AllowOfflineAccess = true,
+                    // maximum life time of Refresh token.  Default is 30 days
+                    AbsoluteRefreshTokenLifetime = 2592000,
+
+                    RefreshTokenExpiration = TokenExpiration.Sliding,
+                    
+                    SlidingRefreshTokenLifetime = 2592000,
+
+                    UpdateAccessTokenClaimsOnRefresh = true,
+
+
                     ClientName = "CT.DDS.Training.DevExpressBlazor",
                     ClientId = "CT.DDS.Training.DevExpressBlazor",
                     RequirePkce = true,

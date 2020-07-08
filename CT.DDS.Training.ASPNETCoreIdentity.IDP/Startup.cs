@@ -33,7 +33,7 @@ namespace CT.DDS.Training.ASPNETCoreIdentity.IDP
             
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("ASPNETCoreIdentity")));
 
             services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 // this brings default user and role stores
@@ -46,13 +46,35 @@ namespace CT.DDS.Training.ASPNETCoreIdentity.IDP
 
             services.AddRazorPages();
 
+            var migrationAssembly = this.GetType().Assembly.GetName().Name;
+
             var builder = services.AddIdentityServer()
-                .AddInMemoryIdentityResources(Config.Ids)
-                .AddInMemoryApiResources(Config.Apis)
-                .AddInMemoryClients(Config.Clients)
-                .AddInMemoryApiScopes(Config.ApiScopes)
+                //.AddInMemoryIdentityResources(Config.Ids)
+                //.AddInMemoryApiResources(Config.Apis)
+                //.AddInMemoryClients(Config.Clients)
+                //.AddInMemoryApiScopes(Config.ApiScopes)
                 .AddAspNetIdentity<AppUser>();
 
+            
+            builder.AddConfigurationStore(options =>
+            {
+                //ConfigurationDbContext 
+                options.ConfigureDbContext = builder =>
+                    builder.UseSqlServer(Configuration.GetConnectionString("IdentityServer"),
+                    // we use this because the Migrations and context are in different assemblies
+                    options => options.MigrationsAssembly(migrationAssembly));
+
+            });
+
+            builder.AddOperationalStore(options =>
+            {
+                //PersistedGrantDbContext
+                options.ConfigureDbContext = builder =>
+                    builder.UseSqlServer(Configuration.GetConnectionString("IdentityServer"),
+                    // we use this because the Migrations and context are in different assemblies
+                    options => options.MigrationsAssembly(migrationAssembly));
+
+            });
             builder.AddDeveloperSigningCredential();
         }
 
